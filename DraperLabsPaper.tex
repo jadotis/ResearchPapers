@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Myths of Cybersecurity \\ Presented by Curtis Walker}
+\author{James Otis }
+\date{April 2017}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+\tab On April 19th, Curtis Walker, a senior expert in security practices came to BU to present Computer Science majors with the myths behind security practices. The presentation was very low level, and was concerned with topics regarding writing secure code in previously non-secure languages, operating system security, exploit mitigation, as well as many other topics that are relevant to programmers today.
+
+\subsection{About Curtis Walker and Draper Labs}
+\tab  Draper Labs was formed out of MIT which is located in Cambridge Massachusetts and is a world leader in solving some of the most difficult problems. Draper Labs is well known for finding solutions to a wide array of $hard$ problems in the realm of engineering and theoretical computer science. Some of these include nuclear weapon detection, rover projects for NASA, as well as projects such as nano-tech for biomedical research.
+\\
+\tab Curtis Walker has worked as one of the 2000 employees at Draper for over 20 years, and has been a pioneer in finding, and preventing offensive exploits. Mr. Walker opened his presentation with the quote:
+\\
+\begin{center}
+"To be the defense, it is important to know the offense"
+\end{center}
+\\
+\tab Mr.Walker continued to explain that we often state that "layered security", "best practices", and "defense in depth", are some of the common phrases that come into play when discussing security. He explains that while these ideas are good in nature, they are written by "security experts". In reality however, there are no such things as "security experts", because by the time it takes to become an expert in security, the exploits and avenues for attacks have changed completely. 
+
+\section{The Myths of Security}
+\begin{center}
+"Do we understand the risk versus benefit trade-off of computer security" - Travis Ormandy, Google Security Expert
+\end{center}
+\tab The best security tech of this era falls into four categories:
+\\
+\begin{itemize}
+    \item Prevention: Prevent the exploitation of all classes of bugs
+    \item Mitigation: Ensure that bugs cannot execute 
+    \item Isolation: Separate privileges of code
+    \item Detection: Find and detect whole classes of bugs
+\end{itemize}
+\\
+\tab With these four security premises, there are a few important facts to consider. The first is that to date, there exists no software that is capable of detecting whole classes of bugs (I.e buffer overflow errors). Therefore, by extension, mitigation is only really useful if detection is successful, which it often isn't. With that being said, let's begin with the Myths.
+
+\subsection{Myth: The worst outcome of installing a security program is that it will be ineffective:}
+\\
+\tab With anti-virus there are inherent trade-offs. These trade-offs lie at the kernel level, as most anti-virus programs run at a very high privilege level. As a result, as soon as an anti-virus program is installed, it increases the surface area for attack, often at very low levels. This has led to many anti-virus programs being targeted for the kernel level privileges as an avenue for exploits. According to Mr. Walker, over the past 10 years, nearly every anti-virus has had some kernel level exploit. 
+\\
+\tab One example of this occurred in 2016, with the leading anti-virus company Symantec. In 2016 it was discovered that Symantec left a remote kernel driver open in an un-sandboxed environment in 25 of their leading products. These produces allowed for a worm to be integrated into the driver and remotely steal and manipulate data. The irony in this is that Symantec is a world leader in the "SAFECODE" initiative, which preaches writing safe, non-exploitable code. However, this indicates an obvious problem in the security industry, as most software developers do not care about security, while C-suite executives preach practices that are not integrated into products. Further reading can be found at:
+https://arstechnica.com/security/2016/06/25-symantec-products-open-to-wormable-attack-by-unopened-e-mail-or-links/
+\\
+\tab There is further evidence of flaws in antivirus as indicated by the tests performed by Av-test.org. Av-test found that only 2/32 top-tier antivirus companies implemented DEP and ASLR into their products. DEP stands for data execution prevention, which allows for a program and/or an operating system to place limitations on the locations in memory at which code can execute. This allows for the prevention of buffer overflow attacks as well as stack smashing attacks. ASLR stands for address space layout randomization, which allows a program to place library locations in memory at arbitrary locations so that they cannot be exploited. Together DEP and ASLR make it very difficult for non-native code to be executed through a jump mechanism. However, even after the top antivirus companies were made aware of these vulnerabilities, only 8/32 chose to enable DEP and ASLR in their products.
+
+\subsection{Myth: Keeping your Antivirus definitions up to date is very important - "The green shield effect"}
+\tab The "green shield effect", as Mr.Walker explained is the common misconception that just because your antivirus says that it is up to date and that "you are protected", does not mean that you are safe or secure. This illusion of security has tripped consumers time and time again, as the promises from antivirus are very limited. This illusion is broken into two facets, the first being that antivirus can only protect against \textbf{known} bugs, and not new threats. The second part of this is that antivirus is just a detection mechanism, and does not protect against entire classes of bugs.
+\\
+\subsection{Myth: If I reformat and reinstall my OS, my machine will be safe and secure}
+\tab This is a common misconception, that even many of the so called "security experts" can fall victim too. Many people are under the conception that they can remove what they believe to be an infected drive and scan it elsewhere. However, as we know scanning is not effective as it only looks for known threats. In addition, with the nation-state mentality, many manufacturers have identified products with malware embedded in the hardware and or BIOS. If the BIOS or the hardware of a machine is infected then it is nearly impossible to detect the presence of foreign software. To put this in perspective, Mr. Walker explained that during trips abroad, customs may seize phones and analyze them. During this time it is very possible that software could be installed on a phone, or even that whole components are replaced altogether. As a result, these phones are trashed after a business trip.
+\\
+\subsection{Myth: Machine Learning/AI/Deep Learning is the best mechanism for computer security}
+\tab Today, we hear the terms deep learning, AI, neural nets, and their benefit for pattern matching and detecting new trends. This has led to the common misconception that maybe AI and these other tools could be able to identify malware, viruses and hackers by their behavior instead of by a signature. However, with the technology we have today this is a dream, as even Bank of America's fraud AI still cannot detect another user using your credit card in another state, minutes after you have used it at a grocery store around the corner from your house. Maybe, one day we will be able to rely on AI for our defense, but as of now it is only a dream. Furthermore, with AI we face a trade-off as a false positive could lead to a great inconvenience to a user. 
+\\
+\subsection{Myth: Formal verification on Microkernels offers 100\% security}
+\tab In order to understand this myth, one first must understand what a microkernel is. In essence a microkernel is a operating system kernel (A privileged area of code)  which is written without excess functionality and system calls. Microkernels are also further divided into smaller locked segments for security (partitions). For example a microkernel may have less than 100,000 lines of code, while the Linux kernel has 12million lines, and the Windows kernel has nearly 50 million lines. Formal verification on the other hand is a mathematical specification of each system call which can be converted to a formal proof of security. While this was very effective for an 87,000 line kernel, which to this day has not been cracked, it took 20 man years. Furthermore, some microkernels which have been proven secure are based on assumptions. For example, in a mathematical proof an engineer may assume "the hardware is trusted and secure". However, in production a worker could simply manipulate the hardware in a factory, defeating the purpose of a proven, secure microkernel.
+\\
+\subsection{Open-Source code is more secure}
+\tab It is often stated that the "many eyes" approach to open-source leads to better software. While this is often true and is at the cornerstone of agile software development, many individuals believe that this is not the case.
+\\
+\begin{center}
+"The 'many eyes' of the open source community are blind, uninterested, or selling to governments for profit" - Brad Spengler (GrSecurity)
+\end{center}
+\\
+\tab As we have learned in class, there are nation states that possess exploits, often in the form of zero-days which they can use as weapons to attack other nations. The US government for example is well known for regularly purchasing exploits to widely used applications.
+\\
+\subsection{Myth: Microsoft Windows is synonymous with poor security}
+\tab Nearly every single computer user who has used Windows has at some point experienced some issue with viruses or hackers. This can mainly be attributed to the fact that most business machines in the wild (public domain) are running some generation of Microsoft Windows. This simple fact in addition to the 52 million lines of code that make up Windows make it a common target for hackers. However, Microsoft has become a leader in operating system security with the invent of Windows 10. Windows 10 features many of the brand new security technologies which in the wild have been very successful at thwarting attackers. 
+\\
+\tab The first of these features is secure boot which allows a user to boot up and run applications that the UEFI firmware checks for a digital signature. This allows a user to boot his or her system without the risk of intrusion. Furthermore, Microsoft has implemented GUI isolation, a security method which allows partitioning of all of the user interfaces. GUI isolation is a feature that is missing in most distributions of Linux, and was a feature that was previously not featured in Windows operating systems until Windows 8. GUI-level isolation allows all user interfaces to be managed by the operating system, rather than by the application. This allows another level of security as previous exploits allowed for the creation of false applications by hijacking the GUI. In addition to these two Windows features the Windows Defender software, which is a security system that runs at kernel level and has been written with Windows security in mind. Windows Defender is considered the top antivirus across the board by most security professionals. Finally, Windows 10 has implemented control flow guard and MPROTECT which are covered further in this document.
+\\
+\subsection{Myth: Tor is Secure}
+\tab Tor has been considered a secure browsing service because of the anonymous nature of the private relays. There are however a few problems with the TOR network that can be identified. The first of these is that traffic coming through Tor must hit an $exit$ node before it enters your computer. This exit node has a unique identifier because it is the transition point at which Tor traffic hits the public Internet. While traffic coming to this node is from an unknown origin, a hacker can patch binaries on the fly when they come into an exit node. This could potentially allow for the transfer of safe files, which at the last moment could be patched with malicious software. 
+\\
+\tab The presence of exit nodes in Tor also allow for other levels of intrusion intro personal privacy. Internet service providers or ISPs can track you using Tor because of the exit nodes, as they manage the public Internet which traffic passes through. In order to subvert this it is possible to use a VPN with Tor along with other methods of lower level security such as secure socket layer (SSL) connections and other forms of transport layer security (TLS).
+
+\subsection{Myth: Stack Canaries are completely effective at preventing buffer overflow}
+\tab A stack canary, is a method of placing an integer within the call stack as to prevent buffer overflow vulnerabilities. 
+\\
+
+\begin{center}
+\huge{Consider the following code:}
+\end{center}
+\\
+\\\\\\\\
+\begin{lstlisting}[language=C++]
+#include <string.h>
+
+void foo (char *bar)
+{
+   char  c[12];
+
+   strcpy(c, bar);  // no bounds checking
+}
+
+int main (int argc, char **argv)
+{
+   foo(argv[1]);
+
+   return 0;
+}
+\end{lstlisting}
+\\
+As a result of the function strcpy not having bounds checking as built in library function, the library function can be manipulated. This allows a programmer to exploit the instance that strcpy writes into an undefined portion of memory, potentially executing malicious code. Stack canaries can prevent this by placing an integer before a return address, to protect and validate the return address. However, stack canaries only protect against "stack smashing" attacks which allow a user to overload the stack into an undefined region of memory. In addition, most libraries don't implement stack canaries and can be manipulated to create an instance of a stack buffer overflow.
+\\
+\subsection{Myth: ASLR (address space layout randomization) can prevent the exploitation of unsecured libraries}
+\tab As explained above, ASLR is a simpler compiler switch which allows a program to store libraries and other functions in random locations in memory known only to the program. This is nearly always a good approach when writing code in an unsafe language such as C or C++ as there are many functions that are not memory safe. However, a good programmer can utilize a debugger to find the location of function signatures in memory. While this step is rather difficult, a skilled programmer can find the location of standard libraries and manipulate stack variables and returns to exploit your code.
+\\
+
+\section{Further reading and Concepts}
+\\
+\subsection{What do we do?}
+\tab The myths of security above seem to contradict themselves. For example, antivirus programs seem to be lacking, and the companies do not practice what they preach (In the case of Symantec). However, as mentioned briefly above, Windows Defender is one of the best antivirus programs of its class. So... What is any computer user supposed to do? How is a programmer supposed to write his code so that his or her code cannot be exploited? The answer is to take a ground up approach with security in mind, and choose the proper frameworks and tools that one is familiar with. While this may seem to be a contemptible approach, it is the best approach in a world where code can be reverse engineered and exploited by any user who simply has the time and know how.
+\\
+\tab The best steps to take as a programmer vary greatly, but there are a few measures that one can take in order to make sure that their code is as secure as possible. The first of these is to choose languages that are memory and thread safe. This means choosing languages that abstract threads and memory away from the programmer. For example, if a programmer was tasked to write code for a Linux application, the recommendation would be to use Rust over C. To a C user like myself this seems like an attack, and a promotion for languages like Rust or Go. However, memory management is paramount, because as explained above, one single buffer overflow error can cause a hacker to convert a benign program into a trampoline to malicious code. With this being said, the best languages to use are C#, Go, Python, and Rust.
+\\
+\tab Most programmers would find a language missing from this list, Java. Java, is a language has dominated enterprise software development for years because it has always been a forerunner in security. However, many issues arise in the Java Runtime Environment (JRE), as there are three distributions each with different security features. On a very high level there are two exploits that are common in Java programming and have been exploited throughout multiple distributions of the language. The first of these is called "Arbitrary Call", a way of manipulating memory corruption bugs. This is especially present in JRE 6, which has DEP and ASLR enabled by default. However, on windows machines, the "Optln" setting of DEP can override settings in the JRE allowing for a hacker to manipulate DLLs. This allows a hacker to make arbitrary function calls for different desired results. In many instances, a hacker can repeatedly exploit sections of code in order to disable the Java Security Manager altogether. The second exploit is the common "Stack Buffer Overflow" attack. This can be exploited in all instances of the JRE. Although the Java runs in a virtual machine, the internal VM contains a virtual stack that can be "smashed" or disrupted to change the control flow of the JVM. As a result a user can hijack the JVM and execute code that exits the VM and modifies a users machine. A potential solution for the latter exists in the form of control flow integrity (CFI). CFI exists in Microsoft's C# language in the form of Control Flow Guard (CFG). CFI works by restricting the location of return pointers to ensure proper flow of execution. However, CFG is still in its infancy.
+\\
+\subsection{What about linux?}
+\tab What about Linux? Linux is an operating system that makes up about 33\% of the computers in the wild to date, and is responsible for most web hosting. Linux is the work of Linus Torvalds, a programmer who is none too concerned with security. 
+\\
+\begin{center}
+"I refuse to bother with the whole security circus in that I think it glorifies - and thus encourages - the wrong behavior. It makes "heroes" out of security people, as if the people who don't just fix normal bugs aren't as important." - Linus Torvalds
+\end{center}
+\\
+\tab With Torvalds being the primary developer of the Linux kernel, it is unlikely that the kernel itself with ever see changes to the core systems. However, this is not to say that other companies will make the changes to the open source software that is the Linux Foundation. This is the case with Redhat which released SELinux in 1998, and another stable distribution in 2016. SELinux stands for Security Enhanced Linux, and implements Mandatory Access Control (MAC), and removes the concept of "root" and "super user" from its release. In addition, SELinux operates on the premise of "minimum work", allotting a user only access to the base file system and network resources. SELinux does however have substantial downfalls in comparison with other Linux distributions. Apache, the shortened name for Apache HTTP Server, is the largest used server software, encompassing 46.1\% of the Internet as of 2016. Apache is lightweight and is able to serve files over the Internet at incredible speeds. Apache is widely known for security vulnerabilities as it runs a standard UNIX kernel, but is ~11\% faster than SELinux, which has more robust security features.
+\\
+\subsection{The NX bit and MPROTECT}
+\tab The NX bit and MPROTECT are two features of the PaX patch to the Linux Kernel. PaX is a patch created by GRSecurity as a method to fix some of the core fundamental security flaws in Linux. PaX comes preinstalled on many Linux distributions and is available for nearly all operating systems. The NX bit and MPROTECT go hand in hand for protecting the security of memory regions. The NX bit is simply a binary operator which simply is flipped on or off depending on the specification of a page in memory. If an NX bit is set then a page in memory is unable to be executed. The NX bit stands for "No-eXecute" and allows for the prevention of buffer overflow attacks by restricting executable regions of memory. MPROTECT is vastly similar except that it is used strictly as a way of specifying a span of memory that the program contains. This allows a programmer to restrict the flow of execution strictly to their program.
+\\
+\section{Conclusion:}
+\tab Today, with the number of exploits present in software, it is scary to be a programmer and even more scary to be a user. As a programmer, especially one that writes low-level code, the risk of forgetting a return statement, or using a unbuffered function could mean damage to infrastructure, a company, or a consumer. This creates a very dangerous situation, as writing code is never bug free, no matter the hours or the time invested into a block of code. This coupled with the fact that there exists no panacea, or cure all for some bugs. However, as a programmer it falls on you to make sure that your code is written as bug free as possible, as one mistake could cost someone their banking information, social security number, or maybe even worse. Do your part, use safe languages, use the precautions, and know the offense so that you can build the defense.
+\end{document}
